@@ -23,3 +23,27 @@
 
     subjects = [[calculus, linear algebra]]
 ];
+
+[
+    type = [short answer]
+
+    statement = [F TOTAL IRMÃO]
+
+    answer = [Tomás de Aquino]
+
+    difficulty_level = [medium]
+
+    subjects = [[calculus, linear algebra]]
+];
+
+[
+    type = [short answer]
+
+    statement = [Qualquer porra]
+
+    answer = [Meu cu alado]
+
+    difficulty_level = [medium]
+
+    subjects = [[calculus, linear algebra]]
+];
