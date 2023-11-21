@@ -1,0 +1,25 @@
+[
+    type = [short answer]
+
+    statement = [Encontre a derivada das seguintes funções, utilizando a \emph{Regra da Cadeia}:
+
+    \begin{enumerate}
+        \item $f(x) = \sqrt{5x + 1}$
+        \item $g(\theta) = \cos^2 \theta$
+        \item $y = e^{\tan (\theta)}$
+        \item $f(t) = t \sin (\pi t)$
+        \item $y = x^x$
+    \end{enumerate}]
+
+    answer = [\begin{enumerate}
+        \item $f'(x) = \displaystyle \frac{5}{2 \sqrt{5x + 1}}$
+        \item $g'(\theta) = -2 \sin (\theta) \cos (\theta)$
+        \item $y' = e^{\tan (\theta)} \sec ^2 (\theta)$
+        \item $f'(t) = \sin (\pi t) + \pi t \cos (\pi t)$
+        \item $y' = x^x (\ln (x) + 1)$
+    \end{enumerate}]
+
+    difficulty_level = [medium]
+
+    subjects = [[calculus, linear algebra]]
+];
