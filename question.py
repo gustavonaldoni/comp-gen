@@ -87,23 +87,24 @@ class Question:
 
 class QuestionReader:
     def read_question_type(self, question_full_text: str) -> QuestionType:
-        regex = r"type = \[.*\]"
+        regex = r"type = \[.*\];"
 
         search_result = re.search(regex, question_full_text)
 
         result = search_result.group()
         result = result.replace("type = ", "")
         result = result.replace("[", "").replace("]", "")
+        result = result.replace(";", "")
 
         return QUESTION_TYPE_MAP[result]
 
     def read_question_statement(self, question_full_text: str) -> str:
-        regex = r"statement = \[.*\]"
+        regex = r"statement = \[.*\];"
 
         search_result = re.search(regex, question_full_text, flags=re.DOTALL)
 
         result = search_result.group()
-        index_closing_bracket = result.find("]")
+        index_closing_bracket = result.find("];")
         result = result[:index_closing_bracket]
 
         result = result.replace("statement = ", "")
@@ -112,12 +113,12 @@ class QuestionReader:
         return result
 
     def read_question_answer(self, question_full_text: str) -> str:
-        regex = r"answer = \[.*\]"
+        regex = r"answer = \[.*\];"
 
         search_result = re.search(regex, question_full_text, flags=re.DOTALL)
 
         result = search_result.group()
-        index_closing_bracket = result.find("]")
+        index_closing_bracket = result.find("];")
         result = result[:index_closing_bracket]
 
         result = result.replace("answer = ", "")
@@ -126,18 +127,19 @@ class QuestionReader:
         return result
 
     def read_question_difficulty_level(self, question_full_text: str) -> str:
-        regex = r"difficulty_level = \[.*\]"
+        regex = r"difficulty_level = \[.*\];"
 
         search_result = re.search(regex, question_full_text)
 
         result = search_result.group()
         result = result.replace("difficulty_level = ", "")
         result = result.replace("[", "").replace("]", "")
+        result = result.replace(";", "")
 
         return QUESTION_DIFFICULTY_LEVEL_MAP[result]
 
     def read_question_subjects(self, question_full_text: str) -> list[str]:
-        regex = r"subjects = \[.*\]"
+        regex = r"subjects = \[.*\];"
 
         search_result = re.search(regex, question_full_text)
 
@@ -145,7 +147,7 @@ class QuestionReader:
         result = result.replace("subjects = ", "")
         result = result.replace("[", "").replace("]", "")
         result = result.split(",")
-        result = [r.strip() for r in result]
+        result = [r.strip().replace(";", "") for r in result]
 
         return result
 
@@ -155,7 +157,7 @@ class QuestionReader:
         with open(file_path, "rb") as file:
             buffer = file.read().decode()
 
-            question_full_texts = buffer.split(";")
+            question_full_texts = buffer.split(";;")
             question_full_texts = [r for r in question_full_texts if r != ""]
 
             for question_full_text in question_full_texts:

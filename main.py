@@ -1,4 +1,4 @@
-from question import Question, QuestionReader
+from question import QuestionReader
 
 
 def main():
@@ -8,7 +8,6 @@ def main():
     for question in questions:
         question.print()
         print()
-
 
 if __name__ == "__main__":
     main()
