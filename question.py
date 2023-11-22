@@ -108,7 +108,8 @@ class QuestionReader:
         result = result[:index_closing_bracket]
 
         result = result.replace("statement = ", "")
-        result = result.replace("[", "")
+        result = result.replace("[", "").replace("]", "")
+        result = re.sub(r'answer = .*', '', result)
 
         return result
 

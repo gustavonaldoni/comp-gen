@@ -107,14 +107,14 @@
 [
     type = [multiple choice];
 
-    statement = [________ is the abbreviation of "binary digit".
+    statement = [What is the abbreviation of "binary digit"?
     
             \begin{enumerate}
-                \item 0 and 1
-                \item Byte
-                \item Bit
-                \item Bin
-                \item Base
+                \item 0 and 1.
+                \item Byte.
+                \item Bit.
+                \item Bin.
+                \item Base.
             \end{enumerate}];
 
     answer = [D];
@@ -151,8 +151,8 @@
     
             \begin{enumerate}
                 \item .
-                \item %
-                \item &
+                \item \%
+                \item \&
                 \item *
                 \item ->
             \end{enumerate}];
@@ -170,16 +170,16 @@
     statement = [What will be the output of the following code?
 
             \begin{verbatim}
-                #include<stdio.h>
+#include<stdio.h>
 
-                int main()
-                {
-                    char str[20] = "Hello";
-                    char *const p=str;
-                    *p='M';
-                    printf("%s\n", str);
-                    return 0;
-                }
+int main()
+{
+    char str[20] = "Hello";
+    char *const p=str;
+    *p='M';
+    printf("%s\n", str);
+    return 0;
+}
             \end{verbatim}
     
             \begin{enumerate}
@@ -203,23 +203,23 @@
     statement = [What will be the output of the following code?
 
             \begin{verbatim}
-                #include<stdio.h>
+#include<stdio.h>
 
-                int main()
-                {
-                    char *str;
-                    str = "%s";
-                    printf(str, "K\n");
-                    return 0;
-                }
+int main()
+{
+    char *str;
+    str = "%s";
+    printf(str, "K\n");
+    return 0;
+}
             \end{verbatim}
     
             \begin{enumerate}
                 \item Error.
                 \item No output.
                 \item K.
-                \item %s
-                \item K\n
+                \item \%s
+                \item \begin{verbatim}K \n \end{verbatim}
             \end{enumerate}];
 
     answer = [C];
@@ -235,13 +235,13 @@
     statement = [What will be the output of the program if the size of pointer is 4-bytes?
 
             \begin{verbatim}
-                #include<stdio.h>
+#include<stdio.h>
 
-                int main()
-                {
-                    printf("%d, %d\n", sizeof(NULL), sizeof(""));
-                    return 0;
-                }
+int main()
+{
+    printf("%d, %d\n", sizeof(NULL), sizeof(""));
+    return 0;
+}
             \end{verbatim}
     
             \begin{enumerate}
