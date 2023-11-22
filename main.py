@@ -1,8 +1,15 @@
 import os
 
-from question import QuestionReader
+from question import (
+    QuestionReader,
+    QuestionType,
+    QuestionDifficultyLevel,
+    FilterOperation,
+)
 from latex import LaTeX
 from latexcompiler import LC
+
+QUESTIONS_FILE_PATH = "./questions_db.txt"
 
 FILE_PATH = "./result/exercises.tex"
 FULL_FILE_PATH = os.path.abspath(FILE_PATH)
@@ -26,7 +33,14 @@ def main():
     latex_document.input("page_style.tex")
     latex_document.make_title()
 
-    questions = question_reader.read_all_questions("./questions_db.txt")
+    types = [QuestionType.MULTIPLE_CHOICE, QuestionType.SHORT_ANSWER]
+    difficulty_levels = [QuestionDifficultyLevel.EASY, QuestionDifficultyLevel.MEDIUM]
+    subjects = ["C programming", "computer architecture"]
+    operation = FilterOperation.AND
+
+    questions = question_reader.read_all_questions_with_filter(
+        QUESTIONS_FILE_PATH, types, difficulty_levels, subjects, operation
+    )
 
     questions_statements = [q.get_statement() for q in questions]
     questions_answers = [q.get_answer() for q in questions]

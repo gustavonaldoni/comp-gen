@@ -12,6 +12,10 @@ class QuestionDifficultyLevel(Enum):
     HARD = "hard"
     MEDIUM = "medium"
     EASY = "easy"
+    
+class FilterOperation(Enum):
+    AND = 'and'
+    OR = 'or'
 
 
 QUESTION_TYPE_MAP = {
@@ -109,7 +113,7 @@ class QuestionReader:
 
         result = result.replace("statement = ", "")
         result = result.replace("[", "").replace("]", "")
-        result = re.sub(r'answer = .*', '', result)
+        result = re.sub(r"answer = .*", "", result)
 
         return result
 
@@ -175,3 +179,73 @@ class QuestionReader:
                 )
 
         return questions
+
+    def read_all_questions_with_filter(
+        self,
+        file_path: str,
+        types: list[QuestionType],
+        difficulty_levels: list[QuestionDifficultyLevel],
+        subjects: list[str],
+        operation: FilterOperation
+    ) -> list[Question]:
+        filtered_questions = []
+        all_questions = self.read_all_questions(file_path)
+        
+        print('================================')
+        
+        if operation == FilterOperation.AND:
+            for question in all_questions:
+                needed_score = 3
+                score = 0
+
+                if len(types) == 0:
+                    needed_score -= 1
+                else:
+                    if question.get_type() in types:
+                        score += 1
+                        print("Increasing score by type ...")
+
+                if len(difficulty_levels) == 0:
+                    needed_score -= 1
+                else:
+                    if question.get_difficulty_level() in difficulty_levels:
+                        score += 1
+                        print("Increasing score by difficulty level ...")
+
+                if len(subjects) == 0:
+                    needed_score -= 1
+                else:
+                    for subject in subjects:
+                        if subject in question.get_subjects():
+                            score += 1
+                            print("Increasing score by subject ...")
+                
+                print()
+                
+                question.print()
+                print()
+                print(f'Final score = {score}')
+                print('================================')
+
+                if score >= needed_score:
+                    filtered_questions.append(question)
+                    
+        elif operation == FilterOperation.OR:
+            for question in all_questions:
+                if question.get_type() in types:
+                    filtered_questions.append(question)
+                    continue
+                    
+                if question.get_difficulty_level() in difficulty_levels:
+                    filtered_questions.append(question)
+                    continue
+                
+                for subject in subjects:
+                        if subject in question.get_subjects():
+                            filtered_questions.append(question)
+                            continue
+        
+        else:
+            raise ValueError("Invalid operation!")
+
+        return filtered_questions
