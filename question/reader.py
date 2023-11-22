@@ -1,4 +1,6 @@
 import re
+import random
+
 from question.question import (
     Question,
     QuestionType,
@@ -105,8 +107,6 @@ class QuestionReader:
         filtered_questions = []
         all_questions = self.read_all_questions(file_path)
 
-        print("================================")
-
         if filter.operation == FilterOperation.AND:
             for question in all_questions:
                 needed_score = 3
@@ -117,14 +117,12 @@ class QuestionReader:
                 else:
                     if question.get_type() in filter.types:
                         score += 1
-                        print("Increasing score by type ...")
 
                 if len(filter.difficulty_levels) == 0:
                     needed_score -= 1
                 else:
                     if question.get_difficulty_level() in filter.difficulty_levels:
                         score += 1
-                        print("Increasing score by difficulty level ...")
 
                 if len(filter.subjects) == 0:
                     needed_score -= 1
@@ -132,14 +130,6 @@ class QuestionReader:
                     for subject in filter.subjects:
                         if subject in question.get_subjects():
                             score += 1
-                            print("Increasing score by subject ...")
-
-                print()
-
-                question.print()
-                print()
-                print(f"Final score = {score}")
-                print("================================")
 
                 if score >= needed_score:
                     filtered_questions.append(question)
@@ -161,5 +151,9 @@ class QuestionReader:
 
         else:
             raise ValueError("Invalid operation!")
+
+        if filter.is_random:
+            random.shuffle(filtered_questions)
+            filtered_questions = filtered_questions[:filter.number_of_questions]
 
         return filtered_questions

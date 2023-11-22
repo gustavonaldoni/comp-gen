@@ -15,3 +15,5 @@ class Filter:
     difficulty_levels: list[QuestionDifficultyLevel]
     subjects: list[str]
     operation: FilterOperation
+    number_of_questions: int
+    is_random: bool

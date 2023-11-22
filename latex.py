@@ -7,8 +7,8 @@ class LaTeX:
         self._author = "Default LaTeX Author"
         self._date = r"\today"
 
-    def change_document_class(self, nova_document_class: str):
-        self._document_class = nova_document_class
+    def change_document_class(self, new_document_class: str):
+        self._document_class = new_document_class
 
     def change_title(self, new_title: str):
         self._title = new_title
@@ -68,6 +68,12 @@ class LaTeX:
 
     def end_document(self):
         self.document += f"\\end{{document}}\n"
+        
+    def begin_multicols(self, number_of_columns):
+        self.document += f"\\begin{{multicols}}{{{number_of_columns}}}\n"
+
+    def end_multicols(self):
+        self.document += f"\\end{{multicols}}\n"
 
     def save_to_file(self, file_path: str):
         with open(file_path, 'wb') as file:

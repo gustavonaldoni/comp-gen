@@ -34,8 +34,12 @@ def main():
     difficulty_levels = [QuestionDifficultyLevel.EASY, QuestionDifficultyLevel.MEDIUM]
     subjects = ["algorithms", "data structures"]
     operation = FilterOperation.AND
+    number_of_questions = 5
+    is_random = True
 
-    filter = Filter(types, difficulty_levels, subjects, operation)
+    filter = Filter(
+        types, difficulty_levels, subjects, operation, number_of_questions, is_random
+    )
 
     questions = question_reader.read_all_questions_with_filter(
         QUESTIONS_FILE_PATH, filter
@@ -44,12 +48,15 @@ def main():
     questions_statements = [q.get_statement() for q in questions]
     questions_answers = [q.get_answer() for q in questions]
 
+    # latex_document.begin_multicols(2)
+
     latex_document.section("Exercises")
     latex_document.enumerate(questions_statements)
 
     latex_document.section("Answers")
     latex_document.enumerate(questions_answers)
 
+    # latex_document.end_multicols()
     latex_document.end_document()
     latex_document.save_to_file(FILE_PATH)
 
