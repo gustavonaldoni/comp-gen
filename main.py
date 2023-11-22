@@ -1,13 +1,10 @@
 import os
 
-from question import (
-    QuestionReader,
-    QuestionType,
-    QuestionDifficultyLevel,
-    FilterOperation,
-)
+from question.question import QuestionType, QuestionDifficultyLevel
+from question.filter import Filter, FilterOperation
 from latex import LaTeX
 from latexcompiler import LC
+from question.reader import QuestionReader
 
 QUESTIONS_FILE_PATH = "./questions_db.txt"
 
@@ -33,13 +30,15 @@ def main():
     latex_document.input("page_style.tex")
     latex_document.make_title()
 
-    types = [QuestionType.MULTIPLE_CHOICE, QuestionType.SHORT_ANSWER]
+    types = [QuestionType.MULTIPLE_CHOICE]
     difficulty_levels = [QuestionDifficultyLevel.EASY, QuestionDifficultyLevel.MEDIUM]
-    subjects = ["C programming", "computer architecture"]
+    subjects = ["algorithms", "data structures"]
     operation = FilterOperation.AND
 
+    filter = Filter(types, difficulty_levels, subjects, operation)
+
     questions = question_reader.read_all_questions_with_filter(
-        QUESTIONS_FILE_PATH, types, difficulty_levels, subjects, operation
+        QUESTIONS_FILE_PATH, filter
     )
 
     questions_statements = [q.get_statement() for q in questions]

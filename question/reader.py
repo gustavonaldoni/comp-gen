@@ -1,92 +1,11 @@
 import re
-
-from enum import Enum
-
-
-class QuestionType(Enum):
-    MULTIPLE_CHOICE = "multiple choice"
-    SHORT_ANSWER = "short answer"
-
-
-class QuestionDifficultyLevel(Enum):
-    HARD = "hard"
-    MEDIUM = "medium"
-    EASY = "easy"
-    
-class FilterOperation(Enum):
-    AND = 'and'
-    OR = 'or'
-
-
-QUESTION_TYPE_MAP = {
-    "multiple choice": QuestionType.MULTIPLE_CHOICE,
-    "short answer": QuestionType.SHORT_ANSWER,
-}
-
-QUESTION_DIFFICULTY_LEVEL_MAP = {
-    "hard": QuestionDifficultyLevel.HARD,
-    "medium": QuestionDifficultyLevel.MEDIUM,
-    "easy": QuestionDifficultyLevel.EASY,
-}
-
-
-class Question:
-    __type: QuestionType = None
-    __statement: str = None
-    __answer: str = None
-    __difficulty_level: QuestionDifficultyLevel = None
-    __subjects: list[str] = None
-
-    def __init__(
-        self,
-        type: QuestionType,
-        statement: str,
-        answer: str,
-        difficulty_level: QuestionDifficultyLevel,
-        subjects: list[str],
-    ) -> None:
-        self.set_type(type)
-        self.set_statement(statement)
-        self.set_answer(answer)
-        self.set_difficulty_level(difficulty_level)
-        self.set_subjects(subjects)
-
-    def set_type(self, type: QuestionType):
-        self.__type = type
-
-    def set_statement(self, statement: str):
-        self.__statement = statement
-
-    def set_answer(self, answer: str):
-        self.__answer = answer
-
-    def set_difficulty_level(self, difficulty_level: QuestionDifficultyLevel):
-        self.__difficulty_level = difficulty_level
-
-    def set_subjects(self, subjects: list[str]):
-        self.__subjects = subjects
-
-    def get_type(self) -> QuestionType:
-        return self.__type
-
-    def get_statement(self) -> str:
-        return self.__statement
-
-    def get_answer(self) -> str:
-        return self.__answer
-
-    def get_difficulty_level(self) -> QuestionDifficultyLevel:
-        return self.__difficulty_level
-
-    def get_subjects(self) -> list[str]:
-        return self.__subjects
-
-    def print(self):
-        print(f"Type: {self.get_type()}")
-        print(f"Statement: {self.get_statement()}")
-        print(f"Answer: {self.get_answer()}")
-        print(f"Difficulty level: {self.get_difficulty_level()}")
-        print(f"Subjects: {self.get_subjects()}")
+from question.question import (
+    Question,
+    QuestionType,
+    QUESTION_TYPE_MAP,
+    QUESTION_DIFFICULTY_LEVEL_MAP,
+)
+from question.filter import Filter, FilterOperation
 
 
 class QuestionReader:
@@ -181,70 +100,65 @@ class QuestionReader:
         return questions
 
     def read_all_questions_with_filter(
-        self,
-        file_path: str,
-        types: list[QuestionType],
-        difficulty_levels: list[QuestionDifficultyLevel],
-        subjects: list[str],
-        operation: FilterOperation
+        self, file_path: str, filter: Filter
     ) -> list[Question]:
         filtered_questions = []
         all_questions = self.read_all_questions(file_path)
-        
-        print('================================')
-        
-        if operation == FilterOperation.AND:
+
+        print("================================")
+
+        if filter.operation == FilterOperation.AND:
             for question in all_questions:
                 needed_score = 3
                 score = 0
 
-                if len(types) == 0:
+                if len(filter.types) == 0:
                     needed_score -= 1
                 else:
-                    if question.get_type() in types:
+                    if question.get_type() in filter.types:
                         score += 1
                         print("Increasing score by type ...")
 
-                if len(difficulty_levels) == 0:
+                if len(filter.difficulty_levels) == 0:
                     needed_score -= 1
                 else:
-                    if question.get_difficulty_level() in difficulty_levels:
+                    if question.get_difficulty_level() in filter.difficulty_levels:
                         score += 1
                         print("Increasing score by difficulty level ...")
 
-                if len(subjects) == 0:
+                if len(filter.subjects) == 0:
                     needed_score -= 1
                 else:
-                    for subject in subjects:
+                    for subject in filter.subjects:
                         if subject in question.get_subjects():
                             score += 1
                             print("Increasing score by subject ...")
-                
+
                 print()
-                
+
                 question.print()
                 print()
-                print(f'Final score = {score}')
-                print('================================')
+                print(f"Final score = {score}")
+                print("================================")
 
                 if score >= needed_score:
                     filtered_questions.append(question)
-                    
-        elif operation == FilterOperation.OR:
+
+        elif filter.operation == FilterOperation.OR:
             for question in all_questions:
-                if question.get_type() in types:
+                if question.get_type() in filter.types:
                     filtered_questions.append(question)
                     continue
-                    
-                if question.get_difficulty_level() in difficulty_levels:
+
+                if question.get_difficulty_level() in filter.difficulty_levels:
                     filtered_questions.append(question)
                     continue
-                
-                for subject in subjects:
-                        if subject in question.get_subjects():
-                            filtered_questions.append(question)
-                            continue
-        
+
+                for subject in filter.subjects:
+                    if subject in question.get_subjects():
+                        filtered_questions.append(question)
+                        continue
+
         else:
             raise ValueError("Invalid operation!")
 

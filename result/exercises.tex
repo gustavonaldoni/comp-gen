@@ -8,42 +8,6 @@
 \maketitle
 \section{Exercises}
 \begin{enumerate}
-\item An OR gate has 6 inputs. How many input words are in its truth table?
-    
-            \begin{enumerate}
-                \item 64
-                \item 32
-                \item 16
-                \item 128
-                \item None of the above
-            \end{enumerate}
-\item What is the 2's-complement representation of -24 in a 16-bit microcomputer?
-    
-            \begin{enumerate}
-                \item 0000 0000 0001 1000
-                \item 1111 1111 1110 0111
-                \item 1111 1111 1110 1000
-                \item 0001 0001 1111 0011
-                \item None of the above
-            \end{enumerate}
-\item Which gate is known as a universal gate?
-    
-            \begin{enumerate}
-                \item NOT gate
-                \item AND gate
-                \item NAND gate
-                \item XOR gate
-                \item None of the above
-            \end{enumerate}
-\item What is the abbreviation of "binary digit"?
-    
-            \begin{enumerate}
-                \item 0 and 1.
-                \item Byte.
-                \item Bit.
-                \item Bin.
-                \item Base.
-            \end{enumerate}
 \item On C programming there is a common used structure defined as \texttt{(void *) 0}. What is it?
     
             \begin{enumerate}
@@ -126,17 +90,72 @@ int main()
                 \item 4, 1.
                 \item 4, 2.
             \end{enumerate}
+\item What is the output of the following Java code?
+
+            \begin{verbatim}
+public class array
+{
+	public static void main(String args)
+	{
+		int arr = {1,2,3,4,5};
+		System.out.println(arr2);
+		System.out.println(arr4);
+	}
+}
+            \end{verbatim}
+    
+            \begin{enumerate}
+                \item 4 and 2.
+                \item 2 and 4.
+                \item 5 and 3.
+                \item 3 and 5.
+                \item 4 and 3.
+            \end{enumerate}
+\item What is the time complexity of reversing a word using stack algorithm?
+
+            \begin{enumerate}
+                \item $O(n \log n)$
+                \item $O(n^2)$
+                \item $O(n)$
+                \item $O(\log n)$
+                \item $O(n!)$
+            \end{enumerate}
+\item What will be output if the following sequence of operations are executed on a empty stack \texttt{s}?
+
+            \begin{verbatim}
+Push(a,s);
+Push(b,s);
+Pop(b);
+Push(c,s);
+            \end{verbatim}
+
+            \begin{enumerate}
+                \item abc
+                \item b
+                \item bc
+                \item bca
+                \item ab
+            \end{enumerate}
+\item When dealing with an empty stack \texttt{s}, what sequence of operations gives the result string \texttt{cat}?
+            
+            \begin{enumerate}
+                \item \texttt{push(c, s); push(a, s); push(t, s); pop(s); pop(s); pop(s);}
+                \item \texttt{push(c,s); pop(s); push(a,s); pop(s); push(t,s); pop(s);}
+                \item \texttt{pop(c); pop(a); pop(t);}
+                \item \texttt{push(c, s); push(a, s); pop(t);}
+                \item \texttt{push(a); push(a, s); push(t, s); pop(a); pop(s); pop(s);}
+            \end{enumerate}
 \end{enumerate}
 \section{Answers}
 \begin{enumerate}
-\item A
-\item C
-\item C
-\item D
 \item A
 \item E
 \item B
 \item C
 \item D
+\item D
+\item C
+\item B
+\item B
 \end{enumerate}
 \end{document}
